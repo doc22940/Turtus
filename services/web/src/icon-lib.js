@@ -2,7 +2,9 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { 
   faExpand, 
+  faCompress,
   faVolumeMute, 
+  faVolumeDown,
   faVolumeUp,
   faMicrophone,
   faMicrophoneSlash,
@@ -26,7 +28,9 @@ import {
 
 library.add(
   faExpand, 
+  faCompress,
   faVolumeMute, 
+  faVolumeDown,
   faVolumeUp, 
   faMicrophone, 
   faMicrophoneSlash,

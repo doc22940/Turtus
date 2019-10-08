@@ -1,9 +1,11 @@
 import React from 'react' 
 import { Box, Tabs, Tab } from 'grommet'
+import { useObserver } from 'mobx-react-lite'
 
 import ChatItem from './ChatItem'
 import Chat from './Chat'
 import Icon from '../../../icon-lib'
+import { video } from '../../../store'
 
 
 function CustomTab({children}){
@@ -19,8 +21,9 @@ function CustomTab({children}){
 }
 
 export default function Sidebar(props){
-  return (
+  return useObserver(()=>(
     <Box 
+      style={{display:video.fullscreen?'none':'flex'}}
       basis="medium">
       <Tabs>
         <Tab 
@@ -54,6 +57,5 @@ export default function Sidebar(props){
         </Tab>
       </Tabs>
     </Box>
-  )
-
+  ))
 }

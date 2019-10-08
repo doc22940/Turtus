@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import turtus from 'turtus/core'
 import { Box } from 'grommet'
+import { useObserver } from 'mobx-react-lite'
 
 import VideoStream from '../../components/VideoStream'
 import VirtualBrowserController from '../../lib/BrowserController'
 import WaitingElement from './WaitingElement'
 import Toolbar from './components/Toolbar'
 import Sidebar from './components/Sidebar'
+import { video } from '../../store'
 
 // Debug purposes 
 window.turtus = turtus
@@ -42,10 +44,9 @@ export default function(props){
     
     manager.on(turtus.PEER_EVENTS.STREAM.PROVIDE, (peer, stream)=>{
       if(peer.clientType !== 'vb'){
-        console.log(peer.clientType)
         return
       }
-      console.log('VB Stream Received')
+      console.log('Virtual Browser Stream Received')
       setStreamSource(stream)
       // set the controller
       setVBController(new VirtualBrowserController(peer))
@@ -77,6 +78,15 @@ export default function(props){
       return true
     })
   }
+  // Toggle fullscreen mode
+  const isFullscreen = useObserver(()=>{
+    return video.fullscreen
+  })
+
+  useEffect(()=>{
+    if(isFullscreen === null) return
+    toggleFullscreen(isFullscreen)
+  }, [isFullscreen])
 
   // Create a virtual browser in this room
   const onRequestBrowser = async () => {

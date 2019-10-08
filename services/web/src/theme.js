@@ -47,6 +47,17 @@ export const lightTheme = deepMerge(grommet, {
         justifyContent : 'space-around'
       })
     }
+  },
+  rangeInput : {
+    thumb : {
+      color : 'gray',
+      extend : () => ({
+        transform : 'scale(.5)'
+      })
+    },
+    track : {
+      // color : 'gray'
+    }
   }
 })
 

@@ -3,13 +3,13 @@ import AspectRatio from 'react-aspect-ratio'
 import styled from '@emotion/styled'
 import { Box } from 'grommet'
 import Icon from '../icon-lib'
+import VideoControls from './VideoControls'
 
 export default function(props){
   const { 
     source,
     children,
     vbController,
-    fullscreen = false,
     aspectRatio = "16/9"
   } = props
 
@@ -131,8 +131,8 @@ export default function(props){
           </Box>
         </Box>
       </Box>
-      <AspectRatio ratio={aspectRatio} style={{ maxWidth: '1280px', position:'relative', flex : 1 }}>
-        <Box style={{position:'relative'}}>
+      <AspectRatio ratio={aspectRatio} style={{ maxWidth: '1280px', position:'relative', flex : 0 }}>
+        <Box style={{position:'relative'}} justify="center" align="center">
           <video 
             width="100%"
             style={{background:'black'}}
@@ -160,6 +160,7 @@ export default function(props){
           }
         </Box>
       </AspectRatio>
+      <VideoControls />
     </Box>
   )
 }

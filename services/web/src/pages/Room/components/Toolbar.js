@@ -1,5 +1,8 @@
 import React from 'react'
 import { Box } from 'grommet'
+import { useObserver } from 'mobx-react-lite'
+
+import { video } from '../../../store'
 import Icon from '../../../icon-lib'
 
 function ToolbarItem({
@@ -28,8 +31,9 @@ function ToolbarItem({
 }
 
 export default function Toolbar(){
-  return (
-    <Box 
+  return useObserver(()=>(
+    <Box
+      style={{display:video.fullscreen?'none':'flex'}}
       background="toolbar"
       direction="column"
       flex={false}
@@ -54,5 +58,5 @@ export default function Toolbar(){
             iconProps={{transform:'rotate-230'}}/>
         </Box>
     </Box>
-  )
+  ))
 }
