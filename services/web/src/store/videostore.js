@@ -29,9 +29,15 @@ export default observable({
       if(this.muted === true && this.volume <= 0){
         this.volume = 50
       }
+    },
+
+    setStreamMode(mode){
+      this.streamMode = mode
     }
   },{
     toggleFullscreen : action,
     toggleMute : action,
-    setVolume : action
-  })
+    setVolume : action,
+    setStreamMode : action
+  }
+)

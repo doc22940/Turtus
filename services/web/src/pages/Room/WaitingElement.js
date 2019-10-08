@@ -1,7 +1,10 @@
-import React from 'react' 
+import React, {useState} from 'react' 
 import styled from '@emotion/styled'
+import { useObserver } from 'mobx-react-lite'
+import { SyncLoader } from 'react-spinners'
 
 import Icon from '../../icon-lib'
+import { video } from '../../store'
 
 const Container = styled.div`
   display : flex;
@@ -66,34 +69,77 @@ const Options = styled.div`
   }
 `
 
+
+
 export default function WaitingElement(props){
   const { 
     onRequestBrowser
   } = props
-  return (
+
+  const options = [
+    {
+      title : 'Virtual Machine',
+      action : onRequestBrowser,
+      icon : 'robot',
+      enabled : true,
+      desc: 'Share a browser on a virtual machine that anyone can control. (Beta)'
+    },
+    {
+      title : 'My Computer',
+      icon : 'laptop',
+      enabled : false,
+      desc: 'Stream a tab, window, or entire desktop from your local computer. (Disabled)'
+    },
+    {
+      title : 'URL',
+      icon : 'link',
+      enabled : false,
+      desc : 'Stream from a variety of supported websites. (Disabled)'
+    }
+  ]
+
+  const defaultDesc = '*cross your fingers and hope it works*'
+
+  const [active, setActive] = useState(-1)
+
+  return useObserver(()=>(
     <Container>
       <content>
-        <div>
-          <h2>How Do You Want To Stream? </h2>
-        </div>
-        <Options>
-          <div onClick={onRequestBrowser}>
-            <h3>From A Virtual Machine</h3>
-            <Icon icon="robot" />
-            <span>Share a browser on a virtual machine that anyone can control.</span>
-          </div>
-          <div style={{color:'gray'}}>
-            <h3>From My Computer</h3>
-            <Icon icon="laptop" />
-            <span>Stream a tab, window, or entire desktop from your local computer.</span>
-          </div>
-          <div style={{color:'gray'}}>
-            <h3>From URL</h3>
-            <Icon icon="link" />
-            <span>Stream from a variety of supported websites such as YouTube</span>
-          </div>
-        </Options>
+        {
+          video.streamMode === 'loading' && 
+          <>
+            <div>
+              <h2>Waiting For the Stream To Start</h2>
+            </div>
+            <SyncLoader loading={true} color="white"/>
+            <div>
+              <p></p>
+            </div>
+          </>
+        }
+        {
+          video.streamMode === null && 
+          <>
+            <div>
+              <h2>How Do You Want To Stream? </h2>
+            </div>
+            <Options>
+              {options.map((d,i)=>(
+                <div 
+                  style={{color:!d.enabled? 'gray':'inherit'}} 
+                  onMouseEnter={()=>setActive(i)}
+                  onClick={d.action} key={d.title}>
+                  {/* <h3>{d.title}</h3> */}
+                  <Icon icon={d.icon}/>
+                </div>
+              ))}
+            </Options>
+            <div>
+              <p>{active >= 0 ? options[active].desc : defaultDesc}</p>
+            </div>
+          </>
+        }
       </content>
     </Container>
-  )
+  ))
 }

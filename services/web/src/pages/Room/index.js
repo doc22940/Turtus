@@ -39,6 +39,7 @@ export default function(props){
     })
 
     manager.on(turtus.PEER_EVENTS.STREAM.READY, (peer)=>{
+      video.setStreamMode('ready')
       manager.requestStream(peer)
     })
     
@@ -90,9 +91,14 @@ export default function(props){
 
   // Create a virtual browser in this room
   const onRequestBrowser = async () => {
-    console.log('onRequestBrowser')
-    const browserId = await VirtualBrowserController.createInstance()
-    console.log(browserId)
+    console.log('🤔 Starting Browser')
+    video.setStreamMode('loading')
+    const didStart = await VirtualBrowserController.createInstance()
+    if(!didStart){
+      console.log('👎 Could not start browser')
+      // wait 2 seconds before failing for UX reasons
+      setTimeout(()=>video.setStreamMode(null), 2*1000)
+    }
   }
 
   return (
