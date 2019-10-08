@@ -11,8 +11,8 @@ module.exports = class LocalDockerDriver extends DockerDriverInterface {
   async init(options={}){
     const { 
       max = 1,
-      signalServer = 'wss://192.168.0.12',
-      imageName = 'virtual-browser',
+      signalServer = 'wss://host.docker.internal',
+      imageName = 'turtus-browser',
       dockerPath = 'docker' 
     } = options
     this.docker = new Docker()

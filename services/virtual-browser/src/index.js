@@ -11,6 +11,8 @@ import WrtcManager, { EVENT_TYPES } from './lib/WrtcManager'
   const wrtcOptions = { 
     signalServer : config.signalServer,
   }
+
+  console.log("🤔 ". wrtcOptions)
   
   // Create the wrtc client first so that connection errors happen faster
   const wrtc = new WrtcManager(wrtcOptions)

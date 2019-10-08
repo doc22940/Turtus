@@ -7,7 +7,7 @@ const URLS = {
   VB_STOP : '/virtual_browser/stop'
 }
 
-// TODO: Send updates from instruction buffer periodically(?)
+// TODO: move this class to turtus-lib repo
 export default class VirtualBrowserController {
   constructor(client){
     this.vbClient = client
@@ -18,7 +18,6 @@ export default class VirtualBrowserController {
   static async createInstance(){
     // create the browser
     const result = await fetch(URLS.BASE+URLS.VB_START)
-    console.log(result.status)
     return result.status > 199 && result.status < 300
   }
 

@@ -10,7 +10,7 @@
     "predocker-build": "cp -fp ../../.env .",
     "docker-build": "docker build -f Dockerfile -t turtus-browser .",
     "postdocker-build": "rm .env",
-    "docker-start": " yarn docker-build && docker run --rm -it --net=host --shm-size=\"1gb\" turtus-browser -s \"wss://192.168.0.12:443\"",
+    "docker-start": " yarn docker-build && docker run --rm -it --net=host --shm-size=\"1gb\" turtus-browser -s \"wss://host.docker.internal\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
