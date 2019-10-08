@@ -82,12 +82,12 @@ export default function WaitingElement(props){
             <Icon icon="robot" />
             <span>Share a browser on a virtual machine that anyone can control.</span>
           </div>
-          <div>
+          <div style={{color:'gray'}}>
             <h3>From My Computer</h3>
             <Icon icon="laptop" />
             <span>Stream a tab, window, or entire desktop from your local computer.</span>
           </div>
-          <div>
+          <div style={{color:'gray'}}>
             <h3>From URL</h3>
             <Icon icon="link" />
             <span>Stream from a variety of supported websites such as YouTube</span>
