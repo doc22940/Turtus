@@ -22,8 +22,8 @@ export default function(props){
   const ref = useRef()
 
   useEffect(()=>{
-    const opts = {
-    }
+    const opts = {}
+    // TODO: move this to a more global configuration
     const adapter = new turtus.Adapters.WebSocketAdapter(server)
     const manager = new turtus.P2PManager(opts)
     manager.setAdapter(adapter)
@@ -35,9 +35,17 @@ export default function(props){
     manager.on(turtus.PEER_EVENTS.PEER_CONNECT, (peer) => {
       console.log(`Peer Connected: ${peer.id}`)
     })
+
+    manager.on(turtus.PEER_EVENTS.STREAM.READY, (peer)=>{
+      manager.requestStream(peer)
+    })
     
-    manager.on('browser.stream', (peer, stream)=>{
-      console.log('Stream Received', stream)
+    manager.on(turtus.PEER_EVENTS.STREAM.PROVIDE, (peer, stream)=>{
+      if(peer.clientType !== 'vb'){
+        console.log(peer.clientType)
+        return
+      }
+      console.log('VB Stream Received')
       setStreamSource(stream)
       // set the controller
       setVBController(new VirtualBrowserController(peer))
