@@ -1,9 +1,18 @@
 import React from 'react'
 import { Box } from 'grommet'
-import { useObserver } from 'mobx-react-lite'
+import styled from 'styled-components'
 
 import { video, ui } from '../../../store'
 import Icon from '../../../icon-lib'
+
+const IconButton = styled(Icon)`
+  cursor : pointer;
+  transition : all 100ms ease-out;
+  &:hover {
+    transform : scale(1.1);
+  }
+`
+
 
 function ToolbarItem({
   icon,
@@ -23,7 +32,7 @@ function ToolbarItem({
       align="center"
       {...props} >
       { icon 
-        ? <Icon color={disabled ? 'gray' : 'inherit'} icon={icon} {...iconProps}/>
+        ? <IconButton color={disabled ? 'gray' : 'inherit'} icon={icon} {...iconProps}/>
         : children
       }
     </Box>

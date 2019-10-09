@@ -29,6 +29,9 @@ const base = deepMerge(grommet, {
     track : {
       // color : 'gray'
     }
+  },
+  layer : {
+    background : 'base'
   }
 })
 
@@ -40,7 +43,7 @@ export const light = deepMerge(base, {
       base : '#f4f6f8',
       toolbar : 'white',
       border : '#dadada',
-      header : 'white'
+      header : 'white',
     }
   }
 })
@@ -49,6 +52,7 @@ export const light = deepMerge(base, {
 export const dark = deepMerge(base, {
   global : {
     colors : {
+      white : "rgba(255,255,255,0.87)",
       accent1 : '#939770',
       accent2 : '#364432',
       base : '#121212',
