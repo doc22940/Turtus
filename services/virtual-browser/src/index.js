@@ -22,7 +22,7 @@ import WrtcManager, { EVENT_TYPES } from './lib/WrtcManager'
       return 
     }
     const { type, args=[] } = data
-    if(virtualBrowser[type]){
+    if(!virtualBrowser[type]){
       return console.warn(`🤔 No handler for event: ${type}`)
     }
     virtualBrowser[type](...args)
