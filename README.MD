@@ -14,67 +14,7 @@ and deploying locally.
 
 ## Running Locally
 
-Running locally is useful for development purposes. 
-Warning: this resource intensive project may shorten your computer's lifespan.
-
-First ensure you have docker, node, and yarn installed with:
-
-```sh
-docker -v 
-# Docker version xx.xx.x, build xxxxxxx
-node -v 
-# vXX.X.X
-yarn -v
-# x.xx.x
-```
-
-### Set dotenv conifguration
-
-Copy `example.env` to a new file named `.env` in the project root.
-By default this file is configured for a local development, so 
-
-There are only a few variables you are required to set:
-- `TURTUS_SERVER_DRIVER`
-  - Keep this set to "local"
-- `TURTUS_SERVER_DB_DRIVER`
-  - 
-
-Some variables are optional:
-- `TURTUS_SERVER_PORT` - The port the server will start on.
-- `TURTUS_SERVER_MAX_VB_INSTANCES` 
-  - The maximum number of virtual browser instances that can be launched.
-- `TURTUS_VB_DEFAULT_IDLE_TIMEOUT`
-  - Set this to -1 to ensure the virtual browser doesn't time out
-
-### Generate SSL Certificates
-
-When running in HTTPS (the default) instead of HTTP, you'll need to generate some certificates. There is a bash script at `services/server/gen_cert.sh` that will automatically generate a certificate for localhost into the `services/server/config` folder.
-
-*TODO: I meant to add those files to `.gitignore` but I forgot lol. I would reccomend not using the certificates in the repository and instead generating your own*
-
-### Build the Virtual Browser docker image
-
-```sh
-# in your favorite terminal application
-cd path/to/project/services/virtual-browser
-# build
-yarn docker-build
-```
-The will create an image locally named `turtus-browser`. 
-
-### Run The Server
-
-Run the server.
-First start the server. This will expose a port on the local machine.
-The signal server requires certificates in order for the virtual-browser to connect to it.
-Probably will use certbot to generate on the fly in the future.
-
-Next start the client application.
-
-Finally, start the docker container.
-
-The docker container requires the url to a webrtc signaling server. 
-Locally this will be: `wss://local-ip-address:PORT`
+See [the wiki page on running locally](https://github.com/Khauri/Turtus/wiki/Running-Locally)
 
 ## Deploy to AWS
 
