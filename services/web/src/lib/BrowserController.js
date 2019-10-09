@@ -15,9 +15,10 @@ export default class VirtualBrowserController {
     // this.keyboard = new Keyboard(input)
   }
 
-  static async createInstance(){
+  static async createInstance(roomId){
     // create the browser
-    const result = await fetch(URLS.BASE+URLS.VB_START)
+    const url = URLS.BASE + URLS.VB_START + (roomId ? `?rid=${roomId}`: '')
+    const result = await fetch(url)
     return result.status > 199 && result.status < 300
   }
 

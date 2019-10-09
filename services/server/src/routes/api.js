@@ -21,9 +21,10 @@ router.get('/', (req, res, next) => {
 // TODO: lock creation behind some kind of access token
 router.route('/virtual_browser/start')
   .get(async (req, res, next)=>{
+    const { rid } = req.query
     try {
       // TODO: store container id in db and return different id (for security)
-      const id = await docker.start()
+      const id = await docker.start({rid})
       res.json({ message:'👍 Browser Created', id })
     } catch (e) {
       // TODO: custom error types

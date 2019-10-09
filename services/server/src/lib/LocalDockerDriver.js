@@ -35,6 +35,7 @@ module.exports = class LocalDockerDriver extends DockerDriverInterface {
 
   start(options = {}){
     const { 
+      rid,
       ...opts 
     } = options
     if(this.containers.size >= this.containerLimit){
@@ -81,8 +82,9 @@ module.exports = class LocalDockerDriver extends DockerDriverInterface {
           rej(err)
         })
       })
+      
       const args = [
-        "-s",  this.signalServer
+        "-s",  this.signalServer + (rid ? `?rid=${rid}` : '')
       ]
       /**
        * @type {Object<Docker.ContainerCreateOptions>}

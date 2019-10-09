@@ -9,6 +9,7 @@ const cm = new ClientManager()
  */
 module.exports = function(client, req){
   // TODO: factor in user accounts?
+  const { rid } = req.query
   const id = req.sessionID
-  cm.connect(id, client)
+  cm.connect(id, client, rid)
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import turtus from 'turtus/core'
 import { Box } from 'grommet'
-import { useObserver, useLocalStore } from 'mobx-react-lite'
+import { useObserver } from 'mobx-react-lite'
 
 import VideoStream from '../../components/VideoStream'
 import VirtualBrowserController from '../../lib/BrowserController'
@@ -17,6 +17,7 @@ window.turtus = turtus
 export default function(props){
   const { 
     // todo: include room url
+    match,
     server = `wss://${window.location.hostname}`
   } = props
 
@@ -25,9 +26,16 @@ export default function(props){
   const ref = useRef()
 
   useEffect(()=>{
+    // TODO: 1. Get room information asynchronously 
+    //       2. Determine if room is private, offline, etc.
+    //       3. Determine room permission
     const opts = {}
+    let wsurl = match.params.room 
+      ? `${server}?rid=${match.params.room}`
+      : server
+    console.log(wsurl)
     // TODO: move this to a more global configuration
-    const adapter = new turtus.Adapters.WebSocketAdapter(server)
+    const adapter = new turtus.Adapters.WebSocketAdapter(wsurl)
     const manager = new turtus.P2PManager(opts)
     manager.setAdapter(adapter)
 
@@ -94,7 +102,7 @@ export default function(props){
   const onRequestBrowser = async () => {
     console.log('🤔 Starting Browser')
     video.setStreamMode('loading')
-    const didStart = await VirtualBrowserController.createInstance()
+    const didStart = await VirtualBrowserController.createInstance(match.params.room)
     if(!didStart){
       console.log('👎 Could not start browser')
       // wait 2 seconds before failing for UX reasons

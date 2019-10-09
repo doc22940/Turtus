@@ -55,7 +55,7 @@ module.exports = class ClientManager extends EventEmitter {
    * @param {string} rid 
    */
   connect(cid, client, rid='default'){
-    console.log('[Websocket] client connected:', cid)
+    console.log('[Websocket] client connected', '\nId:', cid, '\nRoom:', rid)
     const room = this.getRoom(rid)
     client.room = room
     client.roomId = rid
