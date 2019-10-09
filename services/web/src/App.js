@@ -1,18 +1,23 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Box, Grommet } from 'grommet'
+import { useObserver } from 'mobx-react-lite'
 
 import './icon-lib.js'
 import RoomPage from './pages/Room'
 import FullScreen from './components/layouts/FullScreen'
 import ResetCSS from './ResetCSS'
-import { lightTheme } from './theme'
+import * as themes from './theme'
+import ui from './store/ui.js'
 
 
-function App() {
+export default function App() {
+  const theme = useObserver(()=>{
+    return themes[ui.theme.mode] || themes.light
+  })
   // TODO: use mobx to switch themes/preferences
   return (
-    <Grommet theme={lightTheme} >
+    <Grommet theme={theme} >
       <FullScreen>
         <ResetCSS />
         <BrowserRouter>
@@ -26,5 +31,3 @@ function App() {
     </Grommet>
   )
 }
-
-export default App;

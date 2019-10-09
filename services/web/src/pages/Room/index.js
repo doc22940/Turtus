@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import turtus from 'turtus/core'
 import { Box } from 'grommet'
-import { useObserver } from 'mobx-react-lite'
+import { useObserver, useLocalStore } from 'mobx-react-lite'
 
 import VideoStream from '../../components/VideoStream'
 import VirtualBrowserController from '../../lib/BrowserController'
 import WaitingElement from './WaitingElement'
 import Toolbar from './components/Toolbar'
 import Sidebar from './components/Sidebar'
-import { video } from '../../store'
+import { video, ui } from '../../store'
+import UserSettings from '../../components/UserSettings'
 
 // Debug purposes 
 window.turtus = turtus
@@ -101,7 +102,7 @@ export default function(props){
     }
   }
 
-  return (
+  return useObserver(()=>(
     <Box 
       fill
       background="base"
@@ -112,6 +113,7 @@ export default function(props){
         <WaitingElement onRequestBrowser={onRequestBrowser}/>
       </VideoStream>
       <Sidebar />
+      <UserSettings />
     </Box>
-  )
+  ))
 }

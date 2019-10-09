@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from 'grommet'
 import { useObserver } from 'mobx-react-lite'
 
-import { video } from '../../../store'
+import { video, ui } from '../../../store'
 import Icon from '../../../icon-lib'
 
 function ToolbarItem({
@@ -31,7 +31,7 @@ function ToolbarItem({
 }
 
 export default function Toolbar(){
-  return useObserver(()=>(
+  return (
     <Box
       style={{display:video.fullscreen?'none':'flex'}}
       background="toolbar"
@@ -47,16 +47,19 @@ export default function Toolbar(){
           T
         </ToolbarItem>
         <Box>
-          <ToolbarItem size={32} icon={'user-circle'}/>
+          <ToolbarItem 
+            size={32}
+            onClick={()=>ui.set('settings', { show : true })}
+            icon={'user-circle'}/>
           <ToolbarItem disabled icon={'microphone-slash'}/>
           <ToolbarItem disabled icon={'video-slash'}/>
         </Box>
         <Box fill justify="end">
           <ToolbarItem 
-            onClick={()=>alert('todo: add night mode')}
+            onClick={()=>ui.set('theme', ({mode})=>({ mode : mode === 'dark' ? 'light':'dark'}))}
             icon={'moon'} 
             iconProps={{transform:'rotate-230'}}/>
         </Box>
     </Box>
-  ))
+  )
 }
