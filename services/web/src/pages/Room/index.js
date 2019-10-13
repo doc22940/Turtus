@@ -4,7 +4,6 @@ import { Box } from 'grommet'
 import { useObserver } from 'mobx-react-lite'
 
 import VideoStream from '../../components/VideoStream'
-import VirtualBrowserController from '../../lib/BrowserController'
 import WaitingElement from './WaitingElement'
 import Toolbar from './components/Toolbar'
 import Sidebar from './components/Sidebar'
@@ -59,7 +58,7 @@ export default function(props){
       console.log('Virtual Browser Stream Received')
       setStreamSource(stream)
       // set the controller
-      setVBController(new VirtualBrowserController(peer))
+      setVBController(new turtus.VBController(peer))
     })
 
     ;(async()=>{
@@ -102,7 +101,7 @@ export default function(props){
   const onRequestBrowser = async () => {
     console.log('🤔 Starting Browser')
     video.setStreamMode('loading')
-    const didStart = await VirtualBrowserController.createInstance(match.params.room)
+    const didStart = await turtus.VBController.createInstance(match.params.room)
     if(!didStart){
       console.log('👎 Could not start browser')
       // wait 2 seconds before failing for UX reasons

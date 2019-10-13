@@ -36,18 +36,16 @@ module.exports = class LocalDockerDriver extends DockerDriverInterface {
   start(options = {}){
     const { 
       rid,
-      ...opts 
     } = options
     if(this.containers.size >= this.containerLimit){
       throw new Error('Maximum Container Limit Reached')
     }
-    console.log(opts)
     return new Promise(async (res, rej) => {
       console.log('Starting local docker instance')
       let container
       // stdout and stderr streams used to dermine when the container 
       // is ready or if the container errored
-      const streams = new Array(
+      const streams = [
         new Stream.Writable({
           write : (chunk, encoding, next)=>{
             const str = chunk.toString()
@@ -74,15 +72,21 @@ module.exports = class LocalDockerDriver extends DockerDriverInterface {
             next()
           }
         })
-      ).map(stream => {
+      ].map(stream => {
         return stream.once('close',()=>{
-          rej('an output stream closed unexpectedly')
+          console.warn('Stream Closed')
+          this.containers.delete(container.id)
+          // Although a stream closing isn't unexpected
+          // if the stream closes before the promise is resolved
+          // then that's unexpected. Otherwise, the following line 
+          // will do nothing. 
+          rej('An output stream closed unexpectedly')
         })
         .once('error', (err) => {
           rej(err)
         })
       })
-      
+
       const args = [
         "-s",  this.signalServer + (rid ? `?rid=${rid}` : '')
       ]
@@ -106,6 +110,7 @@ module.exports = class LocalDockerDriver extends DockerDriverInterface {
         this.containers.add(container.id)
         await container.start()
       }catch(e){
+        this.containers.delete(container.id)
         rej(e)
       }
     })
