@@ -6,10 +6,10 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node .",
     "dev": "cross-env NODE_ENV=development nodemon .",
-    "predocker-build" : "cp -fp ../../.env .",
+    "predocker-build": "cp -fp ../../.env .",
     "docker-build": "docker build -f Dockerfile -t turtus-server .",
-    "postdocker-build" : "rm .env",
-    "docker-start" : "yarn docker-build && docker run --rm -it --net=host --shm-size=\"1gb\" turtus-server"
+    "postdocker-build": "rm .env",
+    "docker-start": "yarn docker-build && docker run --rm -it --net=host --shm-size=\"1gb\" turtus-server"
   },
   "dependencies": {
     "aws-sdk": "^2.535.0",
@@ -25,12 +25,13 @@
     "express-ws": "^4.0.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
     "lowdb": "^1.0.0",
     "morgan": "~1.9.1",
     "nodemon": "^1.19.2",
     "socket.io": "^2.3.0",
+    "turtus": "https://github.com/Khauri/turtus-lib",
     "uuid": "^3.3.3",
-    "ws": "^7.1.2",
-    "turtus": "https://github.com/Khauri/turtus-lib"
+    "ws": "^7.1.2"
   }
 }

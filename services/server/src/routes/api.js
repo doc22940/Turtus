@@ -3,7 +3,9 @@ const router = express.Router()
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
+const jwt = require('jsonwebtoken')
 
+const config = require('../config')
 const { db, docker } = require('../database-loader')
 
 const requireArgs = (body=[], query=[]) => (req, res, next) => {
@@ -14,9 +16,43 @@ const requireArgs = (body=[], query=[]) => (req, res, next) => {
   return next()
 }
 
+/** TODO: Read config variable to determine protectedness */
+async function protected(req, res, next){
+  if(!req.user){
+    next(createError(500, 'Authentication Required'))
+  }
+  next()
+}
+
 router.get('/', (req, res, next) => {
   res.json(new Date())
 })
+
+router.route('/login')
+  .post(
+    requireArgs(['username', 'password']), 
+    async (req, res, next)=>{
+      const { username, password } = req.body
+      try {
+        const user = await db.find(db._path('users'), {username})
+        if(!user){
+          return next(createError(401, `User: ${username} Not Found`))
+        }
+        const isSame = await bcrypt.compare(password, user.password)
+        if(!isSame){
+          return next(createError(401, `Password Mismatch`))
+        }
+        const userData = {
+          username : user.username,
+          email : user.email
+        }
+        const token = jwt.sign(userData, config.TURTUS_SERVER_JWT_SECRET)
+        return res.json({token})
+      }catch(e){
+        console.error(e)
+        return next(createError(500, 'Unexpected Server Error'))
+      }
+    })
 
 // TODO: lock creation behind some kind of access token
 router.route('/virtual_browser/start')

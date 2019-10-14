@@ -15,4 +15,7 @@ for(let [key, value] of Object.entries(config.parsed)){
   }
 }
 
-module.exports = config.parsed
+module.exports = {
+  TURTUS_SERVER_JWT_SECRET : 'turtus_jwt_secret_key',
+  ...config.parsed
+}
