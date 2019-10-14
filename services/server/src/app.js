@@ -11,7 +11,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 
-const { db, docker } = require('./database-loader')
+const { db, docker, cm } = require('./database-loader')
 const apiRouter = require('./routes/api')
 const wsRouter = require('./routes/ws')
 
@@ -48,6 +48,7 @@ const server = https.createServer({
   await docker.init({
     signalServer : config.TURTUS_VB_DEFAULT_SIGNAL_SERVER
   })
+  await cm.init()
   server.listen(PORT, () => {
     console.log(`Listening on https://localhost:${PORT}`);
   })

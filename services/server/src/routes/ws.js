@@ -1,6 +1,6 @@
-const ClientManager = require('../lib/ClientManager')
+const { cm } = require('../database-loader')
 
-const cm = new ClientManager()
+
 
 /**
  * 
