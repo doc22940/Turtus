@@ -3,6 +3,7 @@ import { Box, Layer } from 'grommet'
 import { useObserver } from 'mobx-react-lite'
 import { ui } from '../store'
 import styled from 'styled-components'
+import { Auth } from 'turtus/core'
 
 const UserSettingsTitleContianer = styled(Box)`
   cursor : pointer;
@@ -60,7 +61,7 @@ export default function UserSettings(props){
     },
     {
       title : 'Logout',
-      component : 'Log Out',
+      component : <button onClick={()=>Auth.logout()}>Logout</button>,
     }
   ], [])
 
@@ -84,6 +85,7 @@ export default function UserSettings(props){
           direction="column">
             {menu.map((item, i)=>(
               <UserSettingsTitle 
+                key={`item-${i}`}
                 {...item} 
                 isActive={i === _activeIndex}
                 activate={()=>setActiveIndex(i)}/>

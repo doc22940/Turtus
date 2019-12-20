@@ -1,38 +1,42 @@
 import React, { useEffect, useState} from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import useAuth from '../lib/useAuth'
+
+/**
+ * This has to be a separate component so that 
+ * useAuth isn't called on every instance of 
+ * AuthRoute, rather only on Router instances 
+ * that match the current url
+ */
+function RenderOrRedirect({Component, ...props}){
+  const {authenticated} = useAuth()
+  // authState is still loading for some reason(?)
+  if(authenticated === null || typeof authenticated === 'undefined'){
+    return null
+  }
+  if(authenticated){
+    return <Component {...props} /> 
+  }
+  return <Redirect to={{
+    pathname:'/auth',
+    state : { from : props.location }
+  }} />
+}
 
 export default function AuthRoute(props){
   const { 
-    verify,
-    component : Component, 
+    component, 
     ...routeProps 
   } = props
 
-  const [isAuthenticated, setIsAuthenticated] = useState(null)
-
-  useEffect(()=>{
-    const done = (isAuthenticated) => {
-      setIsAuthenticated(Boolean(isAuthenticated))
-    }
-    typeof verify === 'function' && verify(done)
-  }, [])
-
-  if(isAuthenticated === null || typeof isAuthenticated === 'undefined'){
-    return <Route {...routeProps} render={()=>null}/>
-  }
-  
   return (
-    <Route {...routeProps} render={(props)=>{
-      if(isAuthenticated === null || typeof isAuthenticated === 'undefined'){
-        return null
-      }
-      if(isAuthenticated){
-        return <Component {...props} /> 
-      }
-      return <Redirect to={{
-        pathname:'/auth',
-        state : { from : props.location }
-      }} />
-    }}/>
+    <Route 
+      {...routeProps} 
+      render={(props) => (
+        <RenderOrRedirect 
+          Component={component} 
+          {...props}/>
+      )} 
+    />
   )
 }

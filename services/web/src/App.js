@@ -1,4 +1,5 @@
 import React from 'react'
+import turtus from 'turtus/core'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Box, Grommet } from 'grommet'
 import { useObserver } from 'mobx-react-lite'
@@ -20,9 +21,8 @@ export default function App() {
 
   // Verify the auth state of current user
   const getAuthState = async (done) => {
-    // TODO: If auth state loaded, use that
-    // otherwise retreive auth state
-    return done(true)
+    const isAuthorized = Boolean(turtus.RestController.token)
+    return done(isAuthorized)
   }
   // TODO: use mobx to switch themes/preferences
   return (
@@ -32,9 +32,9 @@ export default function App() {
         <BrowserRouter>
           <Box background="base" direction="column" width="100vw" height="100vh">
             <Box fill>
-              <Route path="/" exact component={RoomPage} />
-              <Route path="/auth" exact component={AuthPage} />
-              <AuthRoute verify={getAuthState} path="/r/:room" component={RoomPage} />
+              <Route exact path="/" component={RoomPage} />
+              <Route exact path="/auth" exact component={AuthPage} />
+              <AuthRoute exact path="/r/:room" component={RoomPage} />
             </Box>
           </Box>
         </BrowserRouter>
