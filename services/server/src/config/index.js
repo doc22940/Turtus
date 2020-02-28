@@ -1,6 +1,6 @@
 const dotenv = require('dotenv')
 const path = require('path')
-// parse dotenv
+// parse dotenv as JSON
 const config = dotenv.config({
   debug : process.env.TURTUS_DEBUG_ENV,
 })

@@ -1,21 +1,16 @@
 import program from 'commander'
 import dotenv from 'dotenv'
-import path from 'path'
 
-const {TURTUS_ENV_PATH='.env'} = process.env
-
-const dotEnvPath = path.resolve(TURTUS_ENV_PATH);
 const {parsed, error} = dotenv.config({
   debug : process.env.TURTUS_DEBUG_ENV,
-  path : dotEnvPath
 })
+
 for(let [key, value] of Object.entries(parsed)){
   value = process.env[key] || value
   try {
     parsed[key] = JSON.parse(value)
   } catch(e) {
-    // really just a no-op
-    parsed[key] = value
+    // pass
   }
 }
 
@@ -28,8 +23,9 @@ program
   .parse(process.argv)
 
 const args = program.opts()
+
 for(let key in args){
-  if(typeof args[key]==='undefined') delete args[key]
+  if(typeof args[key] === 'undefined') delete args[key]
 }
 
 const defaults = {

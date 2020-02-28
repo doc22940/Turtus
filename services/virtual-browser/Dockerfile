@@ -55,8 +55,6 @@ RUN mkdir -p /usr/lib/firefox-esr/distribution/extensions && \
 
 WORKDIR /usr/app
 
-ENV TURTUS_ENV_PATH='./.env'
-
 COPY package.json ./
 RUN yarn
 
@@ -64,9 +62,6 @@ COPY .babelrc ./
 
 # copy pulse-config
 COPY pulseaudio/ ./pulseaudio
-
-# copy .env file to workdir root
-COPY .env . 
 
 # copy firefox policies file
 COPY firefox/policies.json /usr/lib/firefox-esr/distribution/policies.json

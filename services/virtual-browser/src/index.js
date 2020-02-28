@@ -2,7 +2,7 @@ import config from './config'
 import VirtualBrowser from './lib/virtualBrowser'
 import WrtcManager, { EVENT_TYPES } from './lib/WrtcManager'
 
-(async()=>{
+(async () => {
   let packet = null
   let timer = null
   let browserReady = false
@@ -17,7 +17,7 @@ import WrtcManager, { EVENT_TYPES } from './lib/WrtcManager'
   // Create the wrtc client first so that connection errors happen faster
   const wrtc = new WrtcManager(wrtcOptions)
 
-  wrtc.on(EVENT_TYPES.PEER_MESSAGE, (peer, data)=>{
+  wrtc.on(EVENT_TYPES.PEER_MESSAGE, (peer, data) => {
     if(!virtualBrowser){
       return 
     }
@@ -40,21 +40,21 @@ import WrtcManager, { EVENT_TYPES } from './lib/WrtcManager'
     }
   })
 
-  wrtc.on(EVENT_TYPES.STREAM.REQUEST, (peer)=>{
+  wrtc.on(EVENT_TYPES.STREAM.REQUEST, (peer) => {
     if(!virtualBrowser){
       return
     }
     peer.addStream(virtualBrowser.getStream())
   })
 
-  wrtc.on(EVENT_TYPES.PEER_DISCONNECT, ()=>{
+  wrtc.on(EVENT_TYPES.PEER_DISCONNECT, () => {
     if(wrtc.peers.size > 0 || config.timeout <= 0){
       return
     }
     if(timer){
       clearTimeout(timer)
     }
-    timer = setTimeout(()=>{
+    timer = setTimeout(() => {
       console.log("Timed Out Due To Idleness")
       process.exit(0)
     }, config.timeout)
@@ -62,21 +62,24 @@ import WrtcManager, { EVENT_TYPES } from './lib/WrtcManager'
 
   try {
     await wrtc.init()
-  }catch (e){
+  } catch(e) {
     console.error('😞', e)
     return process.exit(1)
   }
   console.log('🤔 WRTC Client Initialized')
 
   virtualBrowser = new VirtualBrowser(config)
+  
   try {
     await virtualBrowser.init()
     browserReady = true
-  }catch (e){
+  } catch(e) {
     console.error('😞', e)
     return process.exit(1)
   }
+
   console.log('🤔 Virtual Browser Initialized')
+
   packet = wrtc.package(EVENT_TYPES.STREAM.READY)
   wrtc.broadcast(packet)
   
