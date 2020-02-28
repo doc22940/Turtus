@@ -3,7 +3,7 @@ const config = require('./config')
 const expressWs = require('express-ws')
 const cors = require('cors')
 const fs = require('fs')
-const https = require('https')
+const http = require('http')
 const createError = require('http-errors')
 const express = require('express')
 const session = require('express-session')
@@ -36,10 +36,7 @@ app.use (function (req, res, next) {
   }
 })
 // WRTC Signal Server with SSL 
-const server = https.createServer({
-  key : fs.readFileSync(`${__dirname}/config/localhost.key`, 'utf-8'),
- cert : fs.readFileSync(`${__dirname}/config/localhost.cert`, 'utf-8')
-}, app)
+const server = http.createServer({}, app)
 
 // Start the server.
 //
@@ -50,7 +47,7 @@ const server = https.createServer({
   })
   await cm.init()
   server.listen(PORT, () => {
-    console.log(`Listening on https://localhost:${PORT}`);
+    console.log(`Listening on http://localhost:${PORT}`);
   })
 })()
 
