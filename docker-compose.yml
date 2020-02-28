@@ -1,0 +1,26 @@
+# This file runs the server, web client, and some database things
+
+version: "3.7"
+services:
+  server:
+    build: ./services/server
+    env_file:
+      - .env
+    volumes:
+      # mounting the docker socket allows the server to launch docker containers programatically
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./services/server:/usr/app
+      - /usr/app/node_modules
+  client:
+    build: ./services/client
+    env_file:
+      - .env
+    volumes:
+      - ./services/web:/usr/app
+      - /user/app/node_modules
+  redis:
+    image: redis
+  # This is a hack that allows us to build the virual browser from docker-compose but we're not going to run it
+  virtual-browser:
+    build: ./services/virtual-browser
+    command: echo

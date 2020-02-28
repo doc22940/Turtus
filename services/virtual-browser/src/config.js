@@ -2,7 +2,9 @@ import program from 'commander'
 import dotenv from 'dotenv'
 import path from 'path'
 
-const dotEnvPath = path.resolve(process.env.TURTUS_ENV_PATH || __dirname+'/..'.repeat(4)+'/.env')
+const {TURTUS_ENV_PATH='.env'} = process.env
+
+const dotEnvPath = path.resolve(TURTUS_ENV_PATH);
 const {parsed, error} = dotenv.config({
   debug : process.env.TURTUS_DEBUG_ENV,
   path : dotEnvPath

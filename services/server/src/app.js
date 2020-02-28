@@ -83,4 +83,10 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+process.on('SIGTERM', () => {
+  console.warn('SIGTERM received. Gracefully Shutting Down');
+  // TODO: Terminate any running virtual browser instances
+  process.exit(0);
+});
+
 module.exports = app;

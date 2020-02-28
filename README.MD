@@ -1,11 +1,15 @@
 # Turt.us
 
-A self-hosted rabb.it clone using docker forked from [bunny by SimplyLin](https://github.com/SimplyLinn/bunny)
+A self-hosted rabb.it clone using docker forked from [bunny by SimplyLin](https://github.com/SimplyLinn/bunny).
+
+The three DockerHub tags are
+
+### A
 
 Features
-- Control a virtual stateless firefox browser served via docker container
-- Create user accounts and rooms
-- Voice and video chat over p2p, text chat over not p2p 
+- Control a virtual stateless firefox browser served via docker container...✔
+- Create user accounts and rooms...IN PROGRESS
+- Voice and video chat over p2p, text chat over not p2p...TODO
 
 For now this document only covers deploying using [AWS EC2](https://aws.amazon.com/ec2/)
 and deploying locally.
@@ -14,68 +18,16 @@ and deploying locally.
 
 ## Running Locally
 
-See [the wiki page on running locally](https://github.com/Khauri/Turtus/wiki/Running-Locally)
+To run locally simply run `docker-compose up` in the root of the repository. This will build all of the required images.
 
-## Deploy to AWS
+For more information see [the wiki page on running locally](https://github.com/Khauri/Turtus/wiki/Running-Locally)
 
-You receive 750 free hours of EC2 permonth for 12 months which is more than enough to run
-this project for a few friends.
-The exact cost of self-hosting on AWS is still to be determined.
+## Deploying to a Cloud Host
+
+The steps for running on a cloud host such as AWS, Google Cloud, or Azure are more involved. In the future I'm planning on creating some basic terraform modules.
 
 There may be extra work/different charges in deploying to a different cloud based service.
 
-Running the container locally is covered further down.
-
-### Set up AWS
-
-If you don't already have a aws account sign up for one [here](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html)
-
-Create a new IAM user on the aws dashboard [here](https://console.aws.amazon.com/iam/home#/users$new?step=details). You can find more details on that [here](https://docs.aws.amazon.com/en_pv/cli/latest/userguide/cli-chap-configure.html#cli-quick-configuration).
-
-When prompted for the group, for now make sure the group has full access to EC2. 
-If you're lazy like me you can simply select `AdministratorAccess` to give your user full access to everything.
-
-Once you're at the success screen, take note of the Access Key ID and Secret Access Key.
-
-If you don't already have the `aws-cli`, install it [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-
-p.s. the easiest way to install it is probably
-
-```bash
-pip install awscli
-```
-
-Now run the following line and follow the onscreen instructions. It will ask for the Access Key ID and Secret Access Key you (hopefully) took note of earlier.
-
-```bash
-aws configure
-```
-
-I would reccomend you use your closest region from [this-list](https://docs.aws.amazon.com/en_pv/general/latest/gr/rande.html#as_region).
-
-### Set up AWS ECR repositories
-
-These steps assume you intend to host the server and web client on aws. 
-For this tutorial, only the virtual browser is required to be hosted on AWS.
-
-Use [`aws ecr create-repository`](https://docs.aws.amazon.com/cli/latest/reference/ecr/create-repository.html) to create a private [docker repository](https://nickjanetakis.com/blog/docker-tip-53-difference-between-a-registry-repository-and-image) for the server, client, and virtual browser.
-
-```bash
-aws ecr create-repository --repository-name turtus/server
-aws ecr create-repository --repository-name turtus/web
-aws ecr create-repository --repository-name tutus/vb
-```
-
-For each command take note of the `repositoryUri` field in the output.
-Each repository will be located at `[account-id].dkr.ecr.[region].amazonaws.com/[repo-name]`
-
-Next log in to your registry using [`aws get-login`](https://docs.aws.amazon.com/cli/latest/reference/ecr/get-login.html) like so:
-
-```
-aws get-login
-```
-
-### Run
 
 ### Create the .env
 
@@ -177,6 +129,10 @@ curl -k https://localhost/
 For now there is only one client application: a responsive web application that connects to the virtual browser over p2p. 
 
 The app is built using React.
+
+#### 4. NginX?
+
+This repository is structured as a microservice architecture, NginX is used to route requests from the load balancer to a particular microservice.
 
 ## Emojis in Code? Why? 
 

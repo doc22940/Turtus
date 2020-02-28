@@ -53,7 +53,7 @@ RUN mkdir -p /usr/lib/firefox-esr/distribution/extensions && \
   cd /usr/lib/firefox-esr/distribution/extensions && \
   wget -O uBlock0@raymondhill.net.xpi https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi 
 
-WORKDIR /turtus-browser
+WORKDIR /usr/app
 
 ENV TURTUS_ENV_PATH='./.env'
 
