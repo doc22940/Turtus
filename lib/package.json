@@ -1,0 +1,23 @@
+{
+  "name": "turtus",
+  "version": "1.2.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dockerode": "^3.0.1",
+    "eventemitter3": "^4.0.0",
+    "express-session": "^1.16.2",
+    "level": "^5.0.1",
+    "level-js": "^5.0.0",
+    "levelup": "^4.3.2",
+    "lowdb": "^1.0.0",
+    "simple-peer": "^9.6.0",
+    "uuid": "^3.3.3"
+  },
+  "optionalDependencies": {
+    "wrtc": "^0.4.2",
+    "ws": "^7.1.2"
+  }
+}

@@ -19,7 +19,6 @@ RUN curl -fsSL https://get.docker.com -o get-docker.sh && \
 WORKDIR /usr/app
 
 COPY package.json yarn.lock ./
-RUN yarn 
 COPY src ./
 
 EXPOSE 80

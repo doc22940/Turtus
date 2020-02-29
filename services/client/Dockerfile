@@ -1,12 +1,14 @@
 FROM node:12.10-alpine
 
-RUN apk add git
+RUN apk add --no-cache git
 
 WORKDIR /usr/app
 COPY package.json yarn.lock ./
-RUN yarn 
-COPY src public ./
+RUN yarn
+COPY . .
+RUN ls -lah
+RUN yarn build
 
 EXPOSE 80
 
-CMD [ "yarn", "start", '-l', '80']
+CMD [ "yarn", "serve", '-l', '80']
