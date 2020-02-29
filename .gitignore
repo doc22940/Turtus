@@ -65,3 +65,6 @@ typings/
 
 # Local DB file
 .db.json
+
+# Filesystem files
+.DS_Store
