@@ -10,6 +10,7 @@ services:
       # mounting the docker socket allows the server to launch docker containers programatically
       - /var/run/docker.sock:/var/run/docker.sock
       - ./services/server:/usr/app
+      - .env:/usr/app/.env
       - /usr/app/node_modules
   client:
     build: ./services/client
@@ -17,10 +18,13 @@ services:
       - .env
     volumes:
       - ./services/client:/usr/app
+      - .env:/usr/app/.env
       - /usr/app/node_modules
   redis:
     image: redis
   # This is a hack that allows us to build the virual browser from docker-compose but we're not going to run it
   virtual-browser:
     build: ./services/virtual-browser
-    command: echo
+    env_file:
+      - .env
+    command: echo virtual browser image available
