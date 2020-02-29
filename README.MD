@@ -1,10 +1,10 @@
 # Turt.us
 
-A (WIP) self-hosted virtual browser inspired by rabb.it 
+**NOTE this is not a well-maintained or serious project and I am not working on this full time. I give no guarantees that the code in this repository works. For a better looking and more complete project I would recommend checking out [neko](https://github.com/nurdism/neko)**
+
+A (WIP) self-hosted virtual browser inspired by rabb.it
 
 Forked from [bunny by SimplyLin](https://github.com/SimplyLinn/bunny).
-
-For a better looking and more complete project I would recommend checking out [neko](https://github.com/nurdism/neko).
 
 Features
 - Control a virtual stateless firefox browser served via docker container...✔
