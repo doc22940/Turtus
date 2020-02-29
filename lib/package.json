@@ -1,9 +1,8 @@
 {
   "name": "turtus",
-  "version": "1.2.0",
+  "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
-  "private": true,
   "dependencies": {
     "axios": "^0.19.0",
     "dockerode": "^3.0.1",

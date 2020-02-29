@@ -26,7 +26,7 @@
     "morgan": "~1.9.1",
     "nodemon": "^1.19.2",
     "socket.io": "^2.3.0",
-    "turtus": "https://github.com/Khauri/turtus",
+    "turtus": "^0.0.1",
     "uuid": "^3.3.3",
     "ws": "^7.1.2"
   }
