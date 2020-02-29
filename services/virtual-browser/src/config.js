@@ -1,7 +1,7 @@
 import program from 'commander'
 import dotenv from 'dotenv'
 
-const {parsed, error} = dotenv.config({
+const {parsed = {}, error} = dotenv.config({
   debug : process.env.TURTUS_DEBUG_ENV,
 })
 

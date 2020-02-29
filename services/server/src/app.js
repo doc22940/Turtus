@@ -15,7 +15,9 @@ const { db, docker, cm } = require('./database-loader')
 const apiRouter = require('./routes/api')
 const wsRouter = require('./routes/ws')
 
-const PORT = process.env.PORT || config.TURTUS_SERVER_PORT || 443
+const {
+  PORT = config.TURTUS_SERVER_PORT || 443
+} = process.env
 
 const app = express()
 app.enable('trust proxy')

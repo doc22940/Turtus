@@ -6,7 +6,6 @@ WORKDIR /usr/app
 COPY package.json yarn.lock ./
 RUN yarn
 COPY . .
-RUN ls -lah
 RUN yarn build
 
 EXPOSE 80

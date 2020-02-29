@@ -4,15 +4,14 @@
   "private": true,
   "main": "./src/app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node .",
-    "dev": "cross-env NODE_ENV=development nodemon ."
+    "start": "NODE_ENV=production node .",
+    "dev": "NODE_ENV=development nodemon ."
   },
   "dependencies": {
     "aws-sdk": "^2.535.0",
     "bcrypt": "^3.0.6",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
-    "cross-env": "^6.0.0",
     "debug": "~2.6.9",
     "dockerode": "^3.0.1",
     "dotenv": "^8.1.0",

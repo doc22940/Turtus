@@ -1,5 +1,5 @@
 # Production folders
-/build
+services/client/build
 
 # Logs
 logs

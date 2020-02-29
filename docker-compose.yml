@@ -16,8 +16,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./services/web:/usr/app
-      - /user/app/node_modules
+      - ./services/client:/usr/app
+      - /usr/app/node_modules
   redis:
     image: redis
   # This is a hack that allows us to build the virual browser from docker-compose but we're not going to run it

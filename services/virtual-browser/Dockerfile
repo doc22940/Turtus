@@ -55,7 +55,7 @@ RUN mkdir -p /usr/lib/firefox-esr/distribution/extensions && \
 
 WORKDIR /usr/app
 
-COPY package.json ./
+COPY package.json yarn.lock ./
 RUN yarn
 
 COPY .babelrc ./
@@ -74,5 +74,4 @@ COPY src/ ./src
 COPY rc.xml /root/.config/openbox/rc.xml
 # COPY uBlock.json /usr/lib/firefox-esr/browser/extensions/uBlock0@raymondhill.net.json
 
-# ENTRYPOINT ["bash"]
-ENTRYPOINT [ "yarn", "start" ]
+CMD [ "yarn", "start" ]
