@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
 const path = require('path')
 
-dotenv.parse()
+dotenv.config()
 // Try to parse process.env as json
 Object.entries(process.env).forEach(([key, value]) => {
   try {

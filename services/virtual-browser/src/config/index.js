@@ -1,7 +1,7 @@
 import program from 'commander'
 import dotenv from 'dotenv'
 
-dotenv.parse()
+dotenv.config()
 
 // Try to parse process.env as json
 Object.entries(process.env).forEach(([key, value]) => {

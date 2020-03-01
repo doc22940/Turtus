@@ -1,6 +1,6 @@
 FROM node:12.10-alpine
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git bash
 
 WORKDIR /usr/app
 COPY package.json yarn.lock ./
@@ -10,4 +10,4 @@ RUN yarn build
 
 EXPOSE 80
 
-CMD [ "yarn", "serve", '-l', '80']
+CMD [ "yarn", "serve", "--", "-l", "80"]

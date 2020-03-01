@@ -16,7 +16,8 @@ const apiRouter = require('./routes/api')
 const wsRouter = require('./routes/ws')
 
 const {
-  PORT = config.TURTUS_SERVER_PORT || 443
+  TURTUS_SERVER_PORT = 80,
+  PORT = TURTUS_SERVER_PORT,
 } = process.env
 
 const app = express()
