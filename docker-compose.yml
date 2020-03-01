@@ -6,6 +6,8 @@ services:
     build: ./services/server
     env_file:
       - .env
+    environment:
+      - PORT=80
     volumes:
       # mounting the docker socket allows the server to launch docker containers programatically
       - /var/run/docker.sock:/var/run/docker.sock

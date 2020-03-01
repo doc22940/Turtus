@@ -16,8 +16,7 @@ const apiRouter = require('./routes/api')
 const wsRouter = require('./routes/ws')
 
 const {
-  TURTUS_SERVER_PORT = 80,
-  PORT = TURTUS_SERVER_PORT,
+  PORT = 80,
 } = process.env
 
 const app = express()
@@ -30,14 +29,7 @@ const sessionParser = session({
   cookie: { secure: 'auto' }
 })
 app.use(sessionParser)
-// http -> https redirect
-app.use (function (req, res, next) {
-  if (req.secure) {
-    next()
-  } else {
-    res.redirect('https://' + req.headers.host + req.url)
-  }
-})
+
 // WRTC Signal Server with SSL 
 const server = http.createServer({}, app)
 
