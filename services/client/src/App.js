@@ -13,7 +13,6 @@ import * as themes from './theme'
 import ui from './store/ui.js'
 import AuthRoute from './components/AuthRoute.js'
 
-
 export default function App() {
   const theme = useObserver(()=>{
     return themes[ui.theme.mode] || themes.light
